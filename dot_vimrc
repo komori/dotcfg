@@ -1,0 +1,188 @@
+" " The default plugin directory will be as follows:
+"   - Vim (Linux/macOS): '~/.vim/plugged'
+"   - Vim (Windows): '~/vimfiles/plugged'
+"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+" " You can specify a custom plugin directory by passing it as the argument
+"   - e.g. `call plug#begin('~/.vim/plugged')`
+"   - Avoid using standard Vim directory names like 'plugin'
+" " Make sure you use single quotes
+"
+" " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+"Plug 'junegunn/vim-easy-align'
+"
+" " Any valid git URL is allowed
+" Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+"
+" " Multiple Plug commands can be written in a single line using | separators
+"Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+"
+" " On-demand loading
+"Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+" Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+"
+" " Using a non-default branch
+" Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+"
+" " Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
+" Plug 'fatih/vim-go', { 'tag': '*' }
+"
+" " Plugin options
+" Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+"
+" " Plugin outside ~/.vim/plugged with post-update hook
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"
+" " Unmanaged plugin (manually installed and updated)
+" Plug '~/my-prototype-plugin'
+
+
+
+
+
+
+"""""" eerio vim config
+"" remember:
+"" Ctrl-w <hjkl> to move around windows 
+"" Ctrl-<hjkl> to move around windows (Modded)
+"" Ctrl-w w to cycle windows
+" o........Open files, directories and
+" bookmarks......................|NERDTree-o|
+" " go.......Open selected file, but leave cursor in the
+" NERDTree......|NERDTree-go|
+" " t........Open selected node/bookmark in a new
+" tab...................|NERDTree-t|
+" " T........Same as 't' but keep the focus on the current
+" tab..........|NERDTree-T|
+" " i........Open selected file in a split
+" window.......................|NERDTree-i|
+" " gi.......Same as i, but leave the cursor on the
+" NERDTree...........|NERDTree-gi|
+" " s........Open selected file in a new
+" vsplit.........................|NERDTree-s|
+" " gs.......Same as s, but leave the cursor on the
+" NERDTree...........|NERDTree-gs|
+" " <CR>.....User-definable custom open
+" action.......................|NERDTree-<CR>|
+" " O........Recursively open the selected
+" directory....................|NERDTree-O|
+" " x........Close the current nodes
+" parent.............................|NERDTree-x|
+" " X........Recursively close all children of the current
+"" node.........|NERDTree-X|
+" " e........Edit the current
+"" dir.......................................|NERDTree-e|
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"" Install vim-plug if not found
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
+
+"" Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+\| endif
+
+"" TESTING
+"" The ! means the package won't be loaded right away but when
+"" plugins are
+"" loaded during initialization.
+"" if has('syntax') && has('eval')
+""  packadd! matchit
+"" endif
+
+"" Specify a directory for plugins
+"" - Avoid using standard Vim directory names like 'plugin'
+ call plug#begin('~/.vim/bundle')
+
+"" GUI Utility
+ Plug 'junegunn/vim-plug'
+ Plug 'tpope/vim-sensible'
+ Plug 'vim-airline/vim-airline'
+ Plug 'scrooloose/nerdtree'
+ Plug 'ervandew/supertab'
+""Plug 'ctrlpvim/ctrlp.vim'
+ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+ Plug 'ryanoasis/vim-devicons'
+"" Plug 'majutsushi/tagbar'
+ Plug 'vim-syntastic/syntastic'
+"" Plug 'jakedouglas/exuberant-ctags'
+"" Plug 'dart-lang/dart-vim-plugin'
+ Plug 'lifepillar/vim-cheat40'
+
+" Plugin Settings
+ let g:webdevicons_enable = 1
+ let g:webdevicons_enable_nerdtree = 1
+ let g:webdevicons_enable_ctrlp = 1
+ let g:webdevicons_enable_airline_tabline = 1
+ let g:webdevicons_enable_airline_statusline = 1
+ let g:DevIconsEnableFoldersOpenClose = 1
+ let g:airline_powerline_fonts = 1
+ let g:minimap_toggle='<leader>mm'
+ let g:syntastic_dart_checkers = ['dartanalyzer']
+ let g:tagbar_ctags_bin = '~/.vim/plugged/exuberant-ctags/ctags'
+"" let g:NERDTreeMinimalUI = 0
+ let g:NERDTreeMouseMode = 2
+ let g:NERDTreeAutoCenter = 1
+ let g:NERDTreeShowHidden = 1
+ let g:NERDTreeSortHiddenFirst = 1
+ let g:NERDTreeNaturalSort = 1
+ let g:NERDTreeStatusline = -1
+ let g:NERDTreeHighlightCursorline = 1
+ let g:NERDTreeBookmarksFile = "$HOME/.cache/vim/NERDTreeBookmarks"
+ let g:NERDTreeMarkBookmarks = 1
+ let g:NERDTreeShowBookmarks = 1
+ let g:NERDTreeChDirMode = 2
+
+
+
+"" Initialize plugin system
+ call plug#end()
+
+""  mappings
+ inoremap jj <Esc>
+ no <C-j> <C-w>j 
+ no <C-k> <C-w>k 
+ no <C-l> <C-w>l 
+ no <C-h> <C-w>h
+ map <C-n> :NERDTreeToggle<CR>
+ map <C-o> :NERDTreeToggle %<CR>
+ map <C-m> :TagbarToggle<CR>
+
+" Move visual block
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+
+" Scratch buffer
+command! SC vnew | setlocal nobuflisted buftype=nofile bufhidden=wipe noswapfile
+
+"" vim settings
+ set swapfile
+ set dir=$HOME/.vim/swap
+ set backup
+ set backupdir=$HOME/.vim/backup
+ set number relativenumber
+ set guifont=Iosevka\ Nerd\ Font
+ set encoding=UTF-8
+"" colorscheme default
+
+"" set vim to use xresources
+ set t_Co=256
+
+"" Auto start plugins
+" Start NERDTree. If a file is specified, move the cursor to its window.
+ autocmd StdinReadPre * let s:std_in=1
+ autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+" autocmd VimEnter * NERDTree | wincmd p
+ autocmd vimenter * AirlineRefresh
+" autocmd vimenter * vimdevicons
+" autocmd vimenter * supertab
+" autocmd vimenter * ctrlp
+" autocmd vimenter * tagbar
+" autocmd vimenter * syntastic
+
+"" close if NERDTree and/or Minimap is last open window
+ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+

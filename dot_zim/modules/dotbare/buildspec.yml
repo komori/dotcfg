@@ -1,0 +1,39 @@
+version: 0.2
+
+env:
+  parameter-store:
+    LOGIN_PASSWORD: /dotbare/dockerpassword
+    LOGIN_USERNAME: /dotbare/dockerusername
+
+phases:
+  install:
+    commands:
+      - echo Installing shellcheck ...
+      - apt-get update -y
+      - apt-get install shellcheck -y
+  pre_build:
+    commands:
+      - echo Login to dockerhub
+      - 'echo $LOGIN_PASSWORD | docker login --username $LOGIN_USERNAME --password-stdin'
+  build:
+    commands:
+      - echo Checking script compliance ...
+      - ./tests/shellcheck.sh
+      - echo Building docker url image ...
+      - docker image build --build-arg MIGRATE=url -t kazhala/dotbare:testurl -f tests/Dockerfile .
+      - echo Running bats unittest ...
+      - docker container run -i --rm --name dotbare kazhala/dotbare:testurl
+      - echo Building docker bare image ...
+      - docker image build --build-arg MIGRATE=bare -t kazhala/dotbare:testbare -f tests/Dockerfile .
+      - echo Running bats unittest ...
+      - docker container run -i --rm --name dotbare kazhala/dotbare:testbare
+      - echo Building docker image ...
+      - |-
+        DOTBARE_VERSION=$(./dotbare --version | awk -F ": v" '{print $2}')
+      - docker image build -t kazhala/dotbare:$DOTBARE_VERSION .
+      - docker image tag kazhala/dotbare:$DOTBARE_VERSION kazhala/dotbare:latest
+  post_build:
+    commands:
+      - echo Deploying docker image ...
+      - docker image push kazhala/dotbare:latest
+      - docker image push kazhala/dotbare:$DOTBARE_VERSION
