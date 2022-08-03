@@ -3,3 +3,4 @@ key.txt.age
 **/**/*.zwc # ignore *.txt in subdirectories of the target directory
         # but not in subdirectories of subdirectories;
         # so a/b/c.txt would *not* be ignored
+**/key.txt.age
