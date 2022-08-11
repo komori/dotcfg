@@ -31,6 +31,9 @@ source ~/.zalias
 ## Enable asdf
 . /opt/asdf-vm/asdf.sh
 
+## Enable thefuck
+eval $(thefuck --alias)
+
 # -----------------
 # Zsh configuration
 # -----------------
@@ -57,6 +60,7 @@ bindkey -e
 
 # Remove path separator from WORDCHARS.
 WORDCHARS=${WORDCHARS//[\/]}
+WORDCHARS=${WORDCHARS//-}
 
 # -----------------
 # Zim configuration
@@ -163,9 +167,27 @@ unset key
 
 ## Some personal binds
 bindkey $'^U' backward-kill-line
+bindkey '^q' push-line-or-edit
 
 # Spot where I usually source my aliases file
 #source ~/.zalias
+
+
+# explain.sh begins
+explain () {
+  if [ "$#" -eq 0 ]; then
+    while read  -p "Command: " cmd; do
+      curl -Gs "https://www.mankier.com/api/explain/?cols="$(tput cols) --data-urlencode "q=$cmd"
+    done
+    echo "Bye!"
+  elif [ "$#" -eq 1 ]; then
+    curl -Gs "https://www.mankier.com/api/explain/?cols="$(tput cols) --data-urlencode "q=$1"
+  else
+    echo "Usage"
+    echo "explain                  interactive mode."
+    echo "explain 'cmd -o | ...'   one quoted command to explain it."
+  fi
+}
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

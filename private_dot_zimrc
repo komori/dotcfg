@@ -41,11 +41,13 @@ zmodule duration-info
 zmodule git-info
 # required for s1ck94 theme
 zmodule prompt-pwd
-# A heavily reduced, ASCII-only version of the Spaceship and Starship prompts.
+
+## Theme selection
+#zmodule eriner
 zmodule romkatv/powerlevel10k --use degit
 #zmodule steeef
+# A heavily reduced, ASCII-only version of the Spaceship and Starship prompts.
 #zmodule asciiship
-#zmodule eriner
 
 
 # USER Customs
@@ -55,11 +57,22 @@ zmodule supercrabtree/k
 
 # OMZ plugins
 zmodule ~/.zim/modules/omzplug-standalone/sudo 
+zmodule ~/.zim/modules/omzplug-standalone/systemd
 zmodule ~/.zim/modules/omzplug-standalone/rsync
+zmodule ~/.zim/modules/omzplug-standalone/pip
+zmodule ~/.zim/modules/omzplug-standalone/vagrant --fpath _vagrant
 zmodule ~/.zim/modules/omzplug-standalone/extract
 zmodule ~/.zim/modules/omzplug-standalone/zoxide
-#zmodule  /omzplug-standalone/colored-man-pages
-zmodule ~/.zim/modules/omzplug-standalone/fancy-ctrl-z
+zmodule  ~/.zim/modules/omzplug-standalone/colored-man-pages
+zmodule  ~/.zim/modules/omzplug-standalone/colorize
+#zmodule ~/.zim/modules/omzplug-standalone/fancy-ctrl-z
+#zmodule ~/.zim/modules/omzplug-standalone/fzf
+zmodule ~/.zim/modules/omzplug-standalone/nmap
+zmodule ~/.zim/modules/omzplug-standalone/dirpersist
+zmodule ~/.zim/modules/omzplug-standalone/dirhistory
+zmodule ~/.zim/modules/omzplug-standalone/dircycle
+zmodule ~/.zim/modules/omzplug-standalone/aliases
+
 
 #
 # Completion
