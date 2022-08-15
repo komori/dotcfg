@@ -4,7 +4,7 @@
 ## "Sane" Defaults
 alias tree='tree -a -I .git'
 alias cp="cp -ivr --backup=existing"
-alias mv="mv -iv"
+alias mv="mv -ivp"
 alias v=vim
 alias vi=vim
 alias svi="sudo -E vim"
@@ -160,6 +160,7 @@ alias pkgls="dpkg -L"
 alias df="df -Tha --total"
 alias lsbl="lsblk -po +vendor,model"
 alias sh-iosched='grep "" /sys/block/*/queue/scheduler'
+alias bigfiles="sudo du -a . 2>/dev/null | sort -n -r | head -n 20"
 
 ## [BTRFS] QoL
 alias btsnap-root="sudo btrfs subvolume snapshot -r / /.snapshots/root/root-$(date +%Y%m%d)"

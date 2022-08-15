@@ -109,6 +109,7 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
  Plug 'vim-syntastic/syntastic'
 "" Plug 'jakedouglas/exuberant-ctags'
 "" Plug 'dart-lang/dart-vim-plugin'
+ Plug 'farmergreg/vim-lastplace' 
  Plug 'lifepillar/vim-cheat40'
  Plug 'ryanoasis/vim-devicons'
 
@@ -129,6 +130,9 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
  let g:NERDTreeMarkBookmarks = 1
  let g:NERDTreeShowBookmarks = 1
  let g:NERDTreeChDirMode = 2
+ let g:lastplace_ignore = "gitcommit,gitrebase,svn,hgcommit"
+ let g:lastplace_ignore_buftype = "quickfix,nofile,help"
+ let g:lastplace_open_folds = 1
  let g:webdevicons_enable = 1
  let g:webdevicons_enable_nerdtree = 1
  let g:webdevicons_enable_ctrlp = 1
