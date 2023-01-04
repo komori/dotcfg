@@ -23,7 +23,7 @@ zmodule utility
 zmodule ssh
 zmodule exa
 zmodule fzf
-#zmodule asdf
+zmodule asdf
 #zmodule pyenv
 zmodule pacman
 zmodule archive
@@ -52,15 +52,15 @@ zmodule romkatv/powerlevel10k --use degit
 
 # USER Customs
 zmodule kazhala/dotbare --no-submodules
-zmodule https://github.com/StackExchange/blackbox.git
+#zmodule https://github.com/StackExchange/blackbox.git
 zmodule supercrabtree/k
 
 # OMZ plugins
 zmodule ~/.zim/modules/omzplug-standalone/sudo 
 zmodule ~/.zim/modules/omzplug-standalone/systemd
 zmodule ~/.zim/modules/omzplug-standalone/rsync
-zmodule ~/.zim/modules/omzplug-standalone/pip
-zmodule ~/.zim/modules/omzplug-standalone/vagrant --fpath _vagrant
+#zmodule ~/.zim/modules/omzplug-standalone/pip
+#zmodule ~/.zim/modules/omzplug-standalone/vagrant --fpath _vagrant
 zmodule ~/.zim/modules/omzplug-standalone/extract
 zmodule ~/.zim/modules/omzplug-standalone/zoxide
 zmodule  ~/.zim/modules/omzplug-standalone/colored-man-pages

@@ -14,6 +14,12 @@ fi
 # For whatever retarded reason, Go pisses and moans about dependency on absolute path
 GOPATH=/home/camr/.go
 
+# add .local to $PATH for protonup and others (mostly py3/pip installed binaries)
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
+
 # To use batpipe, eval the output of this command in your shell init script.
 eval $(LESSOPEN="|/usr/local/bin/batpipe %s";
 export LESSOPEN;
@@ -26,13 +32,17 @@ export LESS;
 export BATPIPE;
 
 ## Experimenting with sourcing aliases earlier in zim startup
-source ~/.zalias
+source $HOME/.zalias
 
 ## Enable asdf
-. /opt/asdf-vm/asdf.sh
+#. /opt/asdf-vm/asdf.sh
+
+## Enable LSCOLORS
+. /usr/share/LS_COLORS/dircolors.sh
 
 ## Enable thefuck
-eval $(thefuck --alias)
+#eval $(thefuck --alias)
+#eval "$(mcfly init zsh)"
 
 # -----------------
 # Zsh configuration
@@ -43,7 +53,7 @@ eval $(thefuck --alias)
 #
 
 # Remove older command from the history if a duplicate is to be added.
-#setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_ALL_DUPS
 
 #
 # Input/output
@@ -81,7 +91,7 @@ zstyle ':zim:zmodule' use 'degit'
 #
 
 # Set a custom prefix for the generated aliases. The default prefix is 'G'.
-zstyle ':zim:git' aliases-prefix 'g'
+zstyle ':zim:git' aliases-prefix 'G'
 
 #
 # input
@@ -129,6 +139,7 @@ ZSH_HIGHLIGHT_STYLES[comment]='fg=242,bold'
 # ------------------
 
 ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
+
 # Download zimfw plugin manager if missing.
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
   if (( ${+commands[curl]} )); then
@@ -157,6 +168,7 @@ source ${ZIM_HOME}/init.zsh
 #
 
 zmodload -F zsh/terminfo +p:terminfo
+
 # Bind ^[[A/^[[B manually so up/down works both before and after zle-line-init
 for key ('^[[A' '^P' ${terminfo[kcuu1]}) bindkey ${key} history-substring-search-up
 for key ('^[[B' '^N' ${terminfo[kcud1]}) bindkey ${key} history-substring-search-down
@@ -168,10 +180,6 @@ unset key
 ## Some personal binds
 bindkey $'^U' backward-kill-line
 bindkey '^q' push-line-or-edit
-
-# Spot where I usually source my aliases file
-#source ~/.zalias
-
 
 zshcache_time="$(date +%s%N)"
 
@@ -189,5 +197,9 @@ rehash_precmd() {
 }
 
 add-zsh-hook -Uz precmd rehash_precmd
+
+
+# Created by `pipx` on 2023-01-03 01:32:36
+export PATH="$PATH:/home/camr/.local/bin"
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

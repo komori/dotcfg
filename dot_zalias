@@ -4,7 +4,7 @@
 ## "Sane" Defaults
 alias tree='tree -a -I .git'
 alias cp="cp -ivr --backup=existing"
-alias mv="mv -ivp"
+alias mv="mv -iv"
 alias v=vim
 alias vi=vim
 alias svi="sudo -E vim"
@@ -17,13 +17,15 @@ alias doit="sudo su -"
 alias sue="sudo -EH"
 alias shtop="sudo -E htop"
 alias xx='exit'
+alias ytd=yt-dlp
+alias una=unarchive
 
 
 ## CLI Browsing
 #alias ls="exa -hgFm@ --icons --grid --group-directories-first --colour-scale --classify --modified --time-style=iso --sort=type --sort=filename --sort=extension"
 alias l="exa -ahF@m --icons --grid --group-directories-first --colour-scale --classify --sort=type --sort=filename --sort=extension"
-alias lt="exa -alhFUm@ --icons --grid --group-directories-first --colour-scale --classify --modified --time-style=iso --sort=type --sort=filename --sort=extension"
-alias ll="exa -lhgFUm@ --icons --long --group-directories-first --colour-scale --classify --modified --time-style=iso --sort=type --sort=filename --sort=extension"
+alias lt="exa -alhFm --icons --grid --group-directories-first --colour-scale --classify --modified --time-style=iso --sort=type --sort=filename --sort=extension"
+alias ll="exa -lhgFm --icons --group-directories-first --colour-scale --classify --modified --time-style=long-iso --sort=type --sort=filename --sort=extension "
 alias la="exa -alhgFUm@  --icons --long --group-directories-first --colour-scale --classify --sort=filename --sort=extension"
 alias lld="lsd -al -X -h --long --classify --group-directories-first --total-size --extensionsort"
 #alias ls='exa --group-directories-first'
@@ -74,6 +76,9 @@ alias cht="cht.sh"
 # cat/bat/grep, less, etc
 alias batcat="bat --paging=never"
 
+# Parse all fonts/families for list of pastable to cfg files
+alias fc-cfgpasta="fc-list -f '%{family}\n' | awk '!x[$0]++'"
+
 
 ###################################
 ## [dotfile]s: chezmoi & dotbare ##
@@ -108,6 +113,7 @@ alias zimin="zim install"
 alias zclcomp="zim clean && zim compile"
 
 ## [swaywm]
+alias tui=sway-launcher-desktop
 alias launch=sway-launcher-desktop
 alias appls=sway-launcher-desktop
 alias swin=sway-launcher-desktop
@@ -124,6 +130,17 @@ alias termcfg="vim ~/.config/alacritty/alacritty.yml"
 
 ## [git] QoL (uneeded q/zimfw autogen git alias set)
 #alias gc="git clone"
+
+###########################
+## [tmux] term-multiplex ##
+###########################
+# tmux aliases
+alias ta='tmux attach'
+alias tls='tmux ls'
+alias tat='tmux attach -t'
+alias tns='tmux new-session -s'
+
+
 
 #################
 ## Package Mgmt #
@@ -172,7 +189,7 @@ alias mntbackup="sudo -E mount -t cifs -o vers=3.0,credentials=/etc/samba/.smbau
 alias mntISO="sudo -E mount -t cifs -o vers=3.0,credentials=/etc/samba/.smbauth/usrcrd,uid=1000,gid=1001 //10.11.10.15/ISO /mnt/NAS/ISO"
 alias mntmedia="sudo -E mount -t cifs -o vers=3.0,credentials=/etc/samba/.smbauth/usrcrd,uid=1000,gid=1001 //10.11.10.15/media /mnt/NAS/media"
 alias mntdl="sudo -E mount -t cifs -o vers=3.0,credentials=/etc/samba/.smbauth/usrcrd,uid=1000,gid=1001 //10.11.10.15/download /mnt/NAS/download"
-alias mntpr0n="sudo -E mount -t cifs -o vers=3.0,credentials=/etc/samba/.smbauth/usrcrd,uid=1000,gid=1001 //10.11.10.15/trash /home/camr/media/other"
+alias mntpr0n="sudo -E mount -t cifs -o vers=3.0,credentials=/etc/samba/.smbauth/usrcrd,uid=1000,gid=1001 //10.11.10.12/trash /home/camr/media/other"
 
 ####################
 ## Container Mgmt ##
@@ -190,6 +207,78 @@ alias gkmod="sudo -E /opt/gk6x/gk6x"
 ## Web Search from CLI
 alias sa="s -p amazon"
 alias sw="s -p wikipedia"
+
+
+#############
+## systemd ##
+#############
+alias sys='systemctl'
+
+#-*- mode: sh; -*-
+#alias sy="systemctl"
+#alias sydr="sy daemon-reload"
+#alias sye="sy enable"
+#alias syd="sy disable"
+#alias syre="sy restart"
+#alias systa="sy start"
+#alias systo="sy stop"
+#alias systat="sy status"
+#
+#alias ssy="sudo systemctl"
+#alias ssydr="ssy daemon-reload"
+#alias ssye="ssy enable"
+#alias ssyd="ssy disable"
+#alias ssyre="ssy restart"
+#alias ssysta="ssy start"
+#alias ssysto="ssy stop"
+#alias ssystat="ssy status"
+#
+alias jo="journalctl"
+alias joe="jo -e"
+alias joeu="jo -eu"
+alias jof="jo -f"
+alias jofu="jo -fu"
+#
+alias sjo="sudo journalctl"
+alias sjoe="sjo -e"
+alias sjoeu="sjo -eu"
+alias sjof="sjo -f"
+alias sjofu="sjo -fu"
+
+
+##################
+## Git[hub/lab] ##
+##################
+
+grf() {
+    upstream="$(git remote get-url upstream 2>/dev/null || git remote get-url origin)"
+    if [[ $# == 1 ]]; then
+        if [[ "$upstream" == https* ]]; then
+            fork=$(echo "$upstream" | awk -v name="$1" -F/ '{ print $1 "/" $2 "/" $3 "/" name "/" $5 }')
+        else
+            fork=$(echo "$upstream" | awk -v name="$1" -F/ '{ print "https://github.com/" name "/" $2 }')
+        fi
+
+        git remote remove "$1" 2>/dev/null
+        git remote add "$1" "$fork"
+        git fetch "$1"
+    else
+        myfork=$(echo "$upstream" | awk -v name="$USER" -F/ '{ print "git@github.com:" name "/" $5 }')
+
+        git remote remove upstream 2>/dev/null
+        git remote remove origin 2>/dev/null
+
+        git remote add upstream "$upstream"
+        git remote add origin "$myfork"
+
+        git fetch upstream
+        git fetch origin
+
+        git branch --set-upstream-to=upstream/main main
+    fi
+}
+
+
 
 
 #########################################

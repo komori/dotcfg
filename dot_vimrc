@@ -101,9 +101,11 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
  Plug 'junegunn/vim-plug'
  Plug 'tpope/vim-sensible'
  Plug 'vim-airline/vim-airline'
+ Plug 'vim-airline/vim-airline-themes'
  Plug 'scrooloose/nerdtree'
  Plug 'ervandew/supertab'
-""Plug 'ctrlpvim/ctrlp.vim'
+ Plug 'ctrlpvim/ctrlp.vim'
+ Plug 'lervag/wiki.vim'
  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 "" Plug 'majutsushi/tagbar'
  Plug 'vim-syntastic/syntastic'
@@ -118,6 +120,7 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
  let g:minimap_toggle='<leader>mm'
  let g:syntastic_dart_checkers = ['dartanalyzer']
  let g:tagbar_ctags_bin = '~/.vim/plugged/exuberant-ctags/ctags'
+ let g:airline_theme='murmur'
 "" let g:NERDTreeMinimalUI = 0
  let g:NERDTreeMouseMode = 2
  let g:NERDTreeAutoCenter = 1
@@ -133,6 +136,9 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
  let g:lastplace_ignore = "gitcommit,gitrebase,svn,hgcommit"
  let g:lastplace_ignore_buftype = "quickfix,nofile,help"
  let g:lastplace_open_folds = 1
+ let g:wiki_root = '~/.local/vimwiki'
+"" let g:wiki_filetypes = ['md']
+"" let g:wiki_link_extension = '.md' 
  let g:webdevicons_enable = 1
  let g:webdevicons_enable_nerdtree = 1
  let g:webdevicons_enable_ctrlp = 1
@@ -175,11 +181,12 @@ command! SC vnew | setlocal nobuflisted buftype=nofile bufhidden=wipe noswapfile
 "" set vim to use xresources
  set t_Co=256
 
-"" Auto start plugins
+"Autoq" Auto start plugins
 " Start NERDTree. If a file is specified, move the cursor to its window.
- autocmd StdinReadPre * let s:std_in=1
- autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
 " autocmd VimEnter * NERDTree | wincmd p
+ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
  autocmd vimenter * AirlineRefresh
 " autocmd vimenter * vimdevicons
 " autocmd vimenter * supertab
