@@ -202,4 +202,6 @@ add-zsh-hook -Uz precmd rehash_precmd
 # Created by `pipx` on 2023-01-03 01:32:36
 export PATH="$PATH:/home/camr/.local/bin"
 
+[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
+
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

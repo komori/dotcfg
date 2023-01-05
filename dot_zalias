@@ -9,6 +9,7 @@ alias v=vim
 alias vi=vim
 alias svi="sudo -E vim"
 alias man="batman"
+alias sudo='sudo -E '
 
 
 ## Misc Utility
@@ -17,37 +18,39 @@ alias doit="sudo su -"
 alias sue="sudo -EH"
 alias shtop="sudo -E htop"
 alias xx='exit'
-alias ytd=yt-dlp
-alias una=unarchive
+alias ytd='yt-dlp'
+alias una='unarchive'
 
 
 ## CLI Browsing
-#alias ls="exa -hgFm@ --icons --grid --group-directories-first --colour-scale --classify --modified --time-style=iso --sort=type --sort=filename --sort=extension"
-alias l="exa -ahF@m --icons --grid --group-directories-first --colour-scale --classify --sort=type --sort=filename --sort=extension"
-alias lt="exa -alhFm --icons --grid --group-directories-first --colour-scale --classify --modified --time-style=iso --sort=type --sort=filename --sort=extension"
-alias ll="exa -lhgFm --icons --group-directories-first --colour-scale --classify --modified --time-style=long-iso --sort=type --sort=filename --sort=extension "
-alias la="exa -alhgFUm@  --icons --long --group-directories-first --colour-scale --classify --sort=filename --sort=extension"
+alias ls="exa -hgFm@ --icons --grid --group-directories-first --colour-scale --classify --time-style=iso --sort=filename --git"
+alias l="exa -hF@m --icons --grid --group-directories-first --colour-scale --classify --modified --sort=type --sort=filename --sort=extension --git"
+alias ltype="exa -hFm --icons --grid --group --group-directories-first --colour-scale --classify --modified --time-style=iso --sort=ext --sort=extension --git"
+alias ltime="exa -hFm --icons --grid --group --group-directories-first --colour-scale --classify --modified --time-style=iso --sort=modified -r --git"
+alias lltype="exa -lhFm --icons --grid --group --group-directories-first --colour-scale --classify --modified --time-style=iso --sort=type --sort=filename --sort=extension --git"
+alias lltime="exa -lhFm --icons --grid --group --group-directories-first --colour-scale --classify --modified --time-style=iso --sort=modified -r --git"
+alias latype="exa -alhFm --icons --grid --group --group-directories-first --colour-scale --classify --modified --time-style=iso --sort=type --sort=filename --sort=extension --git"
+alias latime="exa -alhFm --icons --grid --group --group-directories-first --colour-scale --classify --modified --time-style=iso --sort=modified -r --git"
+alias ll="exa -lhgFm@ --icons --long --git --group --group-directories-first --colour-scale --classify --modified --sort=name"
+alias la="exa -alhgFUm@  --icons --long --git --group-directories-first --colour-scale --classify --modified --sort=filename"
 alias lld="lsd -al -X -h --long --classify --group-directories-first --total-size --extensionsort"
-#alias ls='exa --group-directories-first'
-#alias ll='ls -l --git'        # Long format, git status
-#alias l='ll -a'               # Long format, all files
 alias lr='lexa --icons -alhgFTUm -@ --long --group-directories-first --colour-scale --classify --time-style=iso --sort=filename --sort=extension'  # Long format, recursive as a tree
-alias lx='ll -sextension'     # Long format, sort by extension
-alias lk='ll -ssize'          # Long format, largest file size last
+#alias lx='ll -sextension'     # Long format, sort by extension
+#alias lk='ll -ssize'          # Long format, largest file size last
 #alias lt='ll -smodified'      # Long format, newest modification time last
 #alias lc='ll -schanged'       # Long format, newest status change (ctime) last
 alias ldot='ls -ld .*'
 alias lS='ls -1FSsh'
 alias lart='ls -1art'
 alias lrt='ls -1rt'
-#alias lx="exa -alh --group-directories-first --icons"
+alias lx="exa -alh --group-directories-first --icons"
 #alias l='ls -lFh'     #size,show type,human readable
 #alias la='ls -lAFh'   #long list,show almost all,show type,human readable
 #alias lr='ls -tRFh'   #sorted by date,recursive,show type,human readable
 #alias lt='ls -ltFh'   #long list,sorted by date,show type,human readable
 #alias ll='ls -l'      #long list
 # Add flags to existing ls aliases.
-#alias ls="${aliases[ls]:-ls} -hF"
+alias ls="${aliases[ls]:-ls} -hF"
 
 # lsd tree variations
 alias ltree="lsd -X -h --tree --almost-all --long --classify --group-directories-first --total-size --extensionsort"
